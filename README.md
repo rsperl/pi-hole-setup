@@ -6,8 +6,10 @@
 1. Install [pi-hole](https://docs.pi-hole.net/main/basic-install/)
 1. Make sure the updateGravity job is disabled in `/etc/cron.d/pihole`.
 1. Setup [pihole-updatelists](https://github.com/jacklul/pihole-updatelists). Update /etc/pihole-updatelist.conf per [recommended lists](https://github.com/jacklul/pihole-updatelists#recommended-lists).
-1. Run `pihole-updatelists` to update the lists.
-1. Ensure router is using pihole for DNS
+2. In the pihole web interface, go to Whitelists and add the following regexes:
+    - Enable Hulu: `^(.+[-_.])??m?ad[sxv]?[0-9]*[-_.] to ^(?!.*hulu)(.+[-_.])??m?ad[sxv]?[0-9]*[-_.]`
+4. Run `pihole-updatelists` to update the lists.
+5. Ensure router is using pihole for DNS
     1. Reserve an IP for the pi
         1. In Google Home, go to Settings => Nest Wifi => Advanced Networking => DHCP Reservations
         1. Click the "+" and give the pi a reserved IP
