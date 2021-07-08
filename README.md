@@ -15,3 +15,8 @@
         1. In Google Home, go to Settings => Nest Wifi => Advanced Networking => DNS
         1. Click "Custom" and add the IP of the pi. No other nameservers should be listed
 
+
+## Reference
+
+- https://docs.pi-hole.net/main/basic-install/
+- https://github.com/jacklul/pihole-updatelists
