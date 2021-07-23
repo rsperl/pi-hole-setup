@@ -8,12 +8,10 @@ from collections import Counter
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser()
-    default_logfile = sys.stdin
-    logfile_required = False
     arg_logfile = p.add_argument(
         "--logfile",
         type=argparse.FileType(mode="r"),
-        help="logfile to parse",
+        help="logfile to parse; default is /var/log/pihole.log or stdin (piped)",
     )
     if sys.stdin.isatty():
         if os.path.isfile("/var/log/pihole.log"):
@@ -23,33 +21,48 @@ def parse_args() -> argparse.Namespace:
     else:
         arg_logfile.default = sys.stdin
 
-    arg_count = p.add_mutually_exclusive_group()
+    group_arg_count = p.add_argument_group(title="limit results by counts")
+    arg_count = group_arg_count.add_mutually_exclusive_group()
     arg_count.add_argument(
         "-t",
         "--top",
-        help="top n results (default is to show all)",
+        help="show top N results (default is to show all)",
+        metavar="N",
         type=int,
         required=False,
     )
     arg_count.add_argument(
         "--having-ge",
-        help="show results having greater than or equal to",
+        help="show all results having greater than or equal to N",
+        metavar="N",
         type=int,
         required=False,
     )
     arg_count.add_argument(
         "--having-le",
-        help="show results having less than or equal to",
+        help="show all results having less than or equal to N",
+        metavar="N",
         type=int,
         required=False,
     )
 
-    arg_show = p.add_mutually_exclusive_group()
+    group_arg_show = p.add_argument_group(title="limit results by pihole action")
+    arg_show = group_arg_show.add_mutually_exclusive_group()
     arg_show.add_argument(
-        "-b", "--blocked", action="store_const", dest="show", const="blocked"
+        "-b",
+        "--blocked",
+        action="store_const",
+        dest="show",
+        const="blocked",
+        help="show blocked results",
     )
     arg_show.add_argument(
-        "-f", "--forwarded", action="store_const", dest="show", const="forwarded"
+        "-f",
+        "--forwarded",
+        action="store_const",
+        dest="show",
+        const="forwarded",
+        help="show forwarded results",
     )
     arg_show.set_defaults(show="blocked")
     args = p.parse_args()
