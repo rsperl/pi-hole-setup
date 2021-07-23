@@ -82,8 +82,6 @@ def parse_pihole_log(logfile_fh, show: str) -> Counter:
         if find_str in line:
             parts = line.split(" ")
             domain = parts[-3]
-            if domain in ["is"]:
-                print(f"find_str={find_str}, domain={domain}: {line.strip()}")
             count[domain] += 1
     return count
 
