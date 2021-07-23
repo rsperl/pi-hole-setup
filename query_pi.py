@@ -109,7 +109,7 @@ if __name__ == "__main__":
     elif args.having_le:
         comment += f"{args.show} results having {args.having_le} or fewer hits"
     else:
-        comment += "showing all results"
+        comment += f"showing all {args.show} results"
     print(comment + " from " + args.logfile.name)
     results = parse_pihole_log(args.logfile, args.show)
     filtered_results = filter_results(results, args.top, args.having_ge, args.having_le)
